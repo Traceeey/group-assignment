@@ -173,3 +173,18 @@ CREATE USER 'write_user'@'localhost' IDENTIFIED BY 'writepass';
 
 GRANT db_readonly TO 'read_user'@'localhost';
 GRANT db_readwrite TO 'write_user'@'localhost';
+
+
+-- Get all books with author names
+SELECT b.title, CONCAT(a.first_name, ' ', a.last_name) AS author
+FROM book b
+JOIN book_author ba ON b.book_id = ba.book_id
+JOIN author a ON ba.author_id = a.author_id;
+
+-- List customers and their current addresses
+SELECT c.first_name, c.last_name, a.street, a.city,  a.postal_code
+FROM customer c
+JOIN customer_address ca ON c.customer_id = ca.customer_id
+JOIN address a ON ca.address_id = a.address_id
+JOIN address_status s ON ca.status_id = s.status_id
+WHERE s.status_name = 'current';
