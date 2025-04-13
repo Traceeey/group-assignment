@@ -156,3 +156,20 @@ VALUES (1, 1, 2, 29.99);
 
 INSERT INTO order_history (order_id, status_id)
 VALUES (1, 1);
+
+
+
+-- Create roles
+CREATE ROLE db_readonly;
+CREATE ROLE db_readwrite;
+
+-- Grant privileges
+GRANT SELECT ON bookstore.* TO db_readonly;
+GRANT SELECT, INSERT, UPDATE, DELETE ON bookstore.* TO db_readwrite;
+
+-- Create users and assign roles
+CREATE USER 'read_user'@'localhost' IDENTIFIED BY 'readpass';
+CREATE USER 'write_user'@'localhost' IDENTIFIED BY 'writepass';
+
+GRANT db_readonly TO 'read_user'@'localhost';
+GRANT db_readwrite TO 'write_user'@'localhost';
